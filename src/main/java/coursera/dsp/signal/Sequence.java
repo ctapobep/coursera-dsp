@@ -1,5 +1,5 @@
 package coursera.dsp.signal;
 
-public interface Signal {
+public interface Sequence {
     float get(int idx);
 }
