@@ -1,31 +1,34 @@
 package coursera.dsp.dft;
 
 public class EulerEquation {
+    public static EulerEquation ZERO = new EulerEquation(0);
     private final float piMultiple;
-    private final int imSign;
 
     public EulerEquation(float piMultiple) {
-        this(piMultiple, 1);
-    }
-    public EulerEquation(float piMultiple, int imSign) {
         this.piMultiple = piMultiple;
-        this.imSign = imSign;
+    }
+    public static EulerEquation eip(float piMultiple) {
+        return new EulerEquation(piMultiple);
     }
 
     public float getRe() {
         return (float) Math.cos(Math.PI * piMultiple);
     }
     public float getIm() {
-        return (float) Math.sin(Math.PI * piMultiple) * imSign;
+        return (float) Math.sin(Math.PI * piMultiple);
     }
     public float getPiMultiple() {
         return piMultiple;
     }
-    public EulerEquation getConjugate() {
-        return new EulerEquation(piMultiple, -1 * imSign);
+    public EulerEquation conjugate() {
+        return new EulerEquation(-1 * piMultiple);
+    }
+
+    public EulerEquation multiply(EulerEquation another) {
+        return new EulerEquation(this.piMultiple + another.piMultiple);
     }
 
     @Override public String toString() {
-        return "e^" + imSign + "*" + piMultiple +"*π";
+        return "e^" + piMultiple +"*π";
     }
 }

@@ -14,6 +14,10 @@ public class FourierTransformTest {
         float[] frequencies = new FourierTransform().analyze(delta);
         for (float frequency : frequencies)
             assertEquals(1., frequency, .0001);
+
+        float[] synthesizedSignal = new FourierTransform().synthesize(frequencies);
+        for (int i = 0; i < delta.length; i++)
+            assertEquals(delta[i], synthesizedSignal[i], .00001);
     }
     @Test public void unitFunctionResultsInFreqIntensity1OnlyAtTheBeginning() {
         float[] unit = new float[64];
@@ -22,6 +26,9 @@ public class FourierTransformTest {
         assertEquals(64., frequencies[0], .0001);
         for (int i = 1; i < frequencies.length; i++)
             assertTrue(frequencies[i] < 1.001);
+        float[] synthesizedSignal = new FourierTransform().synthesize(frequencies);
+        for (int i = 0; i < unit.length; i++)
+            assertEquals(unit[i], synthesizedSignal[i], .00001);
     }
     @Test public void analyze() {
         float[] frequencies = new FourierTransform().analyze(cos(.25, 64));
@@ -34,7 +41,7 @@ public class FourierTransformTest {
                 index = i;
             }
         }
-        assertEquals(8, index);
+        assertEquals(16, index);
     }
 
     private static float[] cos(double piMultiple, int n) {

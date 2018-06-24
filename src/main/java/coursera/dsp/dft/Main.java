@@ -1,10 +1,5 @@
 package coursera.dsp.dft;
 
-import coursera.dsp.MovingAverage;
-import coursera.dsp.SignalProcessor;
-import coursera.dsp.signal.FiniteSeq;
-import coursera.dsp.signal.FiniteSupportSeq;
-import coursera.dsp.signal.PeriodicSeq;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.NumberAxis;
@@ -31,7 +26,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        data = new FourierTransform().analyze(delta(64));//cos(.25, 64));
+        data = new FourierTransform().analyze(cos(.25, 64));//cos(.25, 64));
         launch(args);
     }
     private static float[] cos(double piMultiple, int n) {
