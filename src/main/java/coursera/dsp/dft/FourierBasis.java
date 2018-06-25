@@ -15,14 +15,17 @@ public class FourierBasis {
         return rows[row][col];
     }
 
-    public float[] notNormalizedInnerProduct(float[] signal) {
-        float[] frequencies = new float[signal.length];
+    public float[][] innerProduct(float[] signal) {
+        float[][] frequencies = new float[2][signal.length];
         for (int rowIdx = 0; rowIdx < rows.length; rowIdx++) {
             EulerEquation[] row = rows[rowIdx];
-            float sum = 0;
-            for (int col = 0; col < row.length; col++)
-                sum += row[col].getRe() * signal[col];
-            frequencies[rowIdx] = sum;
+            float realSum = 0, imaginarySum = 0;
+            for (int col = 0; col < row.length; col++) {
+                realSum += row[col].getRe() * signal[col];
+                imaginarySum += row[col].getIm() * signal[col];
+            }
+            frequencies[0][rowIdx] = realSum;
+            frequencies[1][rowIdx] = imaginarySum;
         }
         return frequencies;
     }
