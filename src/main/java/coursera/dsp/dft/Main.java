@@ -1,10 +1,13 @@
 package coursera.dsp.dft;
 
 import javafx.application.Application;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
@@ -12,34 +15,41 @@ import java.util.Arrays;
 
 public class Main extends Application {
 
+    private static float[] input;
     private static float[] real;
     private static float[] imaginary;
 
     @Override
     public void start(Stage stage) {
-        XYChart.Series<Number, Number> reSeries = new XYChart.Series<>();
-        XYChart.Series<Number, Number> imSeries = new XYChart.Series<>();
-        for (int i = 0; i < real.length; i++)
-            reSeries.getData().add(new XYChart.Data<>(i, real[i]));
-        for (int i = 0; i < imaginary.length; i++)
-            imSeries.getData().add(new XYChart.Data<>(i, imaginary[i]));
+        Series<Number, Number> reSeries = new Series<>(),
+                imSeries = new Series<>(),
+                inputSeries = new Series<>();
+        for (int i = 0; i < input.length; i++) {
+            reSeries.getData().add(new Data<>(i, real[i]));
+            imSeries.getData().add(new Data<>(i, imaginary[i]));
+            inputSeries.getData().add(new Data<>(i, input[i]));
+        }
 
-        XYChart<Number, Number> reChart = new ScatterChart<>(new NumberAxis(), new NumberAxis());
-        XYChart<Number, Number> imChart = new ScatterChart<>(new NumberAxis(), new NumberAxis());
+        XYChart<Number, Number> reChart = new ScatterChart<>(new NumberAxis(), new NumberAxis()),
+                imChart = new ScatterChart<>(new NumberAxis(), new NumberAxis()),
+                inputChart = new ScatterChart<>(new NumberAxis(), new NumberAxis());
         reChart.getData().add(reSeries);
         imChart.getData().add(imSeries);
+        inputChart.getData().add(inputSeries);
 
-        FlowPane root = new FlowPane();
-        root.getChildren().addAll(reChart, imChart);
+        FlowPane root = new FlowPane(Orientation.HORIZONTAL,
+                inputChart,
+                new FlowPane(reChart, imChart));
 
-        stage.setScene(new Scene(root, 600, 800));
+        stage.setScene(new Scene(root, 1000, 800));
         stage.show();
     }
 
     public static void main(String[] args) {
-        float[][] frequencies = new FourierTransform().analyze(scaled(cos(.125F, 64), 3));
-        real = frequencies[0];//cos(.25, 64));
-        imaginary = frequencies[1];//cos(.25, 64));
+        input = scaled(cos(.125F, 64), 3);
+        float[][] frequencies = new FourierTransform().analyze(input);
+        real = frequencies[0];
+        imaginary = frequencies[1];
         launch(args);
     }
     private static float[] cos(float piMultiple, int n) {

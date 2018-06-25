@@ -5,10 +5,11 @@ public class FourierBasis {
 
     public FourierBasis(int n) {
         this.rows = new EulerEquation[n][n];
+        //noinspection UnnecessaryLocalVariable
         float nF = n;
         for(int row = 0; row < n; row++)
             for(int col = 0; col < n; col++)
-                rows[row][col] = new EulerEquation((col * row) / nF);
+                rows[row][col] = new EulerEquation(2 * (col * row) / nF);
     }
 
     public EulerEquation get(int row, int col) {
@@ -19,13 +20,13 @@ public class FourierBasis {
         float[][] frequencies = new float[2][signal.length];
         for (int rowIdx = 0; rowIdx < rows.length; rowIdx++) {
             EulerEquation[] row = rows[rowIdx];
-            float realSum = 0, imaginarySum = 0;
+            float reSum = 0, imSum = 0;
             for (int col = 0; col < row.length; col++) {
-                realSum += row[col].getRe() * signal[col];
-                imaginarySum += row[col].getIm() * signal[col];
+                reSum += row[col].getRe() * signal[col];
+                imSum += row[col].getIm() * signal[col];
             }
-            frequencies[0][rowIdx] = realSum;
-            frequencies[1][rowIdx] = imaginarySum;
+            frequencies[0][rowIdx] = reSum;
+            frequencies[1][rowIdx] = imSum;
         }
         return frequencies;
     }

@@ -29,6 +29,6 @@ public class EulerEquation {
     }
 
     @Override public String toString() {
-        return "e^" + piMultiple +"*π";
+        return "e^i*" + piMultiple +"*π";
     }
 }
