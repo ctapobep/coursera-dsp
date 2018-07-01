@@ -28,6 +28,10 @@ public class EulerEquation {
         return new EulerEquation(this.piMultiple + another.piMultiple);
     }
 
+    public ComplexNumber toComplex() {
+        return new ComplexNumber(getRe(), getIm());
+    }
+
     @Override public String toString() {
         return "e^i*" + piMultiple +"*π";
     }

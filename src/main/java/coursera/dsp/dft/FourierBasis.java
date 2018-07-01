@@ -16,28 +16,28 @@ public class FourierBasis {
         return rows[row][col];
     }
 
-    public float[][] innerProduct(float[] signal) {
-        float[][] frequencies = new float[2][signal.length];
+    public ComplexNumber[] innerProduct(float[] signal) {
+        ComplexNumber[] result = new ComplexNumber[signal.length];
         for (int rowIdx = 0; rowIdx < rows.length; rowIdx++) {
             EulerEquation[] row = rows[rowIdx];
             float reSum = 0, imSum = 0;
             for (int col = 0; col < row.length; col++) {
-                reSum += row[col].getRe() * signal[col];
-                imSum += row[col].getIm() * signal[col];
+                EulerEquation conjugate = row[col].conjugate();
+                reSum += conjugate.getRe() * signal[col];
+                imSum += conjugate.getIm() * signal[col];
             }
-            frequencies[0][rowIdx] = reSum;
-            frequencies[1][rowIdx] = imSum;
+            result[rowIdx] = new ComplexNumber(reSum, imSum);
         }
-        return frequencies;
+        return result;
     }
-    public float[] linearlyCombine(float[] coefficients) {
-        float[] result = new float[coefficients.length];
+    public ComplexNumber[] linearlyCombine(ComplexNumber[] frequencies) {
+        ComplexNumber[] result = new ComplexNumber[frequencies.length];
         for (int rowIdx = 0; rowIdx < rows.length; rowIdx++) {
             EulerEquation[] row = rows[rowIdx];
-            float sum = 0;
+            ComplexNumber sum = ComplexNumber.ZERO;
             for (int col = 0; col < row.length; col++)
-                sum += row[col].getRe() * coefficients[col];
-            result[rowIdx] = sum / coefficients.length;
+                sum = sum.plus(row[col].toComplex().times(frequencies[col]));
+            result[rowIdx] = sum.divide(frequencies.length);
         }
         return result;
     }
