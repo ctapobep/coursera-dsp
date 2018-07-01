@@ -1,7 +1,7 @@
 package coursera.dsp.dft;
 
 public class FourierBasis {
-    private final EulerEquation[][] rows;
+    public final EulerEquation[][] rows;
 
     public FourierBasis(int n) {
         this.rows = new EulerEquation[n][n];
