@@ -3,10 +3,11 @@ package coursera.dsp.dft;
 import javafx.application.Application;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
-import javafx.scene.chart.*;
+import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
@@ -91,10 +92,18 @@ public class Main extends Application {
         return result;
     }
 
-    private static XYChart<Number, Number> chart(float[] data) {
+    public static XYChart<Number, Number> chart(float[] data) {
         Series<Number, Number> reSeries = new Series<>();
         for (int i = 0; i < data.length; i++)
             reSeries.getData().add(new Data<>(i, data[i]));
+        XYChart<Number, Number> reChart = new AreaChart<>(new NumberAxis(), new NumberAxis());
+        reChart.getData().add(reSeries);
+        return reChart;
+    }
+    public static XYChart<Number, Number> chart(float[] domain, float[] data) {
+        Series<Number, Number> reSeries = new Series<>();
+        for (int i = 0; i < data.length; i++)
+            reSeries.getData().add(new Data<>(domain[i], data[i]));
         XYChart<Number, Number> reChart = new AreaChart<>(new NumberAxis(), new NumberAxis());
         reChart.getData().add(reSeries);
         return reChart;

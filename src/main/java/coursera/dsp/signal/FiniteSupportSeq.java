@@ -15,7 +15,7 @@ public class FiniteSupportSeq extends FiniteSeq {
     }
 
     @Override public float get(int idx) {
-        if(idx < 0 || idx > getLength() - 1) return 0;
+        if(idx < 0 || idx > size() - 1) return 0;
         return super.get(idx);
     }
 

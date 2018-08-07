@@ -15,7 +15,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        for (int i = 0; i < data.getLength(); i++)
+        for (int i = 0; i < data.size(); i++)
             series.getData().add(new XYChart.Data<>(i, data.get(i)));
 
         XYChart<Number, Number> chart = new ScatterChart<>(new NumberAxis(), new NumberAxis());
